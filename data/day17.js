@@ -1,4 +1,4 @@
-exports.runs = 200;
+exports.runs = 2;
 
 exports.solve = function (input) {
 	let data = input.split('\n');

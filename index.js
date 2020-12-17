@@ -1,5 +1,5 @@
 const options = {
-	'once-each': true,
+	'once-each': false,
 	'test': false
 }
 
