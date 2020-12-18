@@ -1,11 +1,12 @@
 const options = {
 	'once-each': false,
-	'test': false
+	'test': false,
+	'git-table': true
 }
 
 const fs = require('fs'), files = fs.readdirSync('./data'), days = {}, data = {}, solutions = {}, times = {}, runs = {}, puzzles = [{}], initTime = process.uptime();
 
-let i;
+let i, tableStr = '| Day | Part 1 | Part 2 | Avg Runtime | Runs | Total Runtime |\n| :---: | :---: | :---: | :---: | :---: | :---: |';
 
 for (i = 1; files.includes(`day${i}.js`); i++) {
 	days[i] = require(`./data/day${i}.js`);
@@ -35,6 +36,7 @@ else for (let j = 1; j < i; j++) {
 	for (let z = 1; z < runAmt; z++) solve(data[j]);
 	let endTime = process.uptime();
 	times[j] = (endTime - startTime) * 1000;
+	if (options['git-table']) tableStr += `\n| ${j} | ${solutions[j][0]} | ${solutions[j][1]} | ${Math.round(times[j] * 1000) / (1000 * runs[j])}ms | ${runs[j]} | ${Math.round(times[j] * 1000) / 1000}ms |`;
 }
 
 for (let j = 1; j < i; j++) {
@@ -48,5 +50,9 @@ for (let j = 1; j < i; j++) {
 }
 
 console.table(puzzles);
+
+if (options['git-table']) fs.writeFile('./SPEEDS.md', tableStr, err => {
+	if (err) console.log(err);
+});
 
 console.log(`Process completed in ${(process.uptime() - initTime) * 1000}ms.`);

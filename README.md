@@ -8,4 +8,4 @@ If you simply wish to run each day exactly once, set ``'once-each'`` to `true` i
 
 Contributions that improve efficiency are gratefully welcomed.
 
-Current speeds (as of Day 17): https://cdn.discordapp.com/attachments/762324232948023316/789205720746033182/Screenshot_from_2020-12-18_00-27-09.png
+Current speeds can be seen [here](SPEEDS.md).
