@@ -1,7 +1,7 @@
 const options = {
 	'once-each': false,
 	'test': false,
-	'git-table': true
+	'git-table': false
 }
 
 const fs = require('fs'), files = fs.readdirSync('./data'), days = {}, data = {}, solutions = {}, times = {}, runs = {}, puzzles = [{}], initTime = process.uptime();
