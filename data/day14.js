@@ -28,3 +28,5 @@ exports.solve = function (input) {
 
 	return [Object.values(memory1).reduce((a, b) => a + b, 0), Object.values(memory2).reduce((a, b) => a + b, 0)];
 }
+
+// A non-recursive optimization has been thought of, but I'm too lazy to implement it now. 'o.o

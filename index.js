@@ -4,6 +4,8 @@ const options = {
 	'git-table': false
 }
 
+
+
 const fs = require('fs'), files = fs.readdirSync('./data'), days = {}, data = {}, solutions = {}, times = {}, runs = {}, puzzles = [{}], initTime = process.uptime();
 
 let i, tableStr = '| Day | Part 1 | Part 2 | Avg Runtime | Runs | Total Runtime |\n| :---: | :---: | :---: | :---: | :---: | :---: |';
@@ -31,6 +33,7 @@ else for (let j = 1; j < i; j++) {
 	runs[j] = options['once-each'] ? 1 : days[j].runs;
 	let runAmt = runs[j];
 	let solve = days[j].solve;
+	if (!solve) continue;
 	let startTime = process.uptime();
 	solutions[j] = solve(data[j]);
 	for (let z = 1; z < runAmt; z++) solve(data[j]);
@@ -41,11 +44,11 @@ else for (let j = 1; j < i; j++) {
 
 for (let j = 1; j < i; j++) {
 	const puzzle = {};
-	puzzle["Part 1"] = solutions[j][0];
-	puzzle["Part 2"] = solutions[j][1];
-	puzzle["Avg Runtime"] = Math.round(times[j] * 1000) / (1000 * runs[j]) + 'ms';
-	puzzle["Runs"] = runs[j];
-	puzzle["Total Runtime"] = Math.round(times[j] * 1000) / 1000 + 'ms';
+	puzzle["Part 1"] = solutions[j] ? solutions[j][0] : '-';
+	puzzle["Part 2"] = solutions[j] ? solutions[j][1] : '-';
+	puzzle["Avg Runtime"] = times[j] ? Math.round(times[j] * 1000) / (1000 * runs[j]) + 'ms' : '-';
+	puzzle["Runs"] = runs[j] || '-';
+	puzzle["Total Runtime"] = times[j] ? Math.round(times[j] * 1000) / 1000 + 'ms' : '-';
 	puzzles.push(puzzle);
 }
 
