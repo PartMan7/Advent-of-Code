@@ -58,4 +58,6 @@ if (options['git-table']) fs.writeFile('./SPEEDS.md', tableStr, err => {
 	if (err) console.log(err);
 });
 
+console.log(`Average puzzle runtime over all 49 puzzles is ${puzzles.reduce((a, b) => a + (parseFloat(b["Avg Runtime"]) || 0), 0)}ms`);
+
 console.log(`Process completed in ${(process.uptime() - initTime) * 1000}ms.`);
