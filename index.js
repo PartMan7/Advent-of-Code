@@ -1,7 +1,7 @@
 const options = {
 	'once-each': false,
 	'test': false,
-	'git-table': true
+	'git-table': false
 }
 
 
