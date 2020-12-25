@@ -1,4 +1,4 @@
-exports.runs = 5;
+exports.runs = 2;
 
 exports.solve = function (input) {
 	let players = input.split('\n\n');

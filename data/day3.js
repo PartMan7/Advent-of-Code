@@ -1,7 +1,7 @@
 exports.runs = 1000;
 
 exports.solve = function (input) {
-	let data = input.split('\n'), width = data[0].length, logs = {};
+	let data = input.split('\n'), width = data[0].length;
 	function slopeOf(x, y) {
 		let i = 0, j = 0, row, hits = 0;
 		while (row = data[i]) {
