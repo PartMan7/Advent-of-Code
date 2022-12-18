@@ -1,8 +1,9 @@
 exports.runs = 1000;
 
 exports.solve = function (fileString) {
-	const input = fileString.trim().split('\n');
-	const ans1 = null;
-	const ans2 = null;
+	// Oh god oh crap
+	const input = fileString.trim().split('\n').map(line => line.split('').map(n => ~~n));
+	const ans1 = ((fov, rows, cols) => [[Array.from({ length: rows }).forEach((_, i) => fov[i][0] = fov[i][cols - 1] = 1), Array.from({ length: cols }).forEach((_, j) => fov[0][j] = fov[rows - 1][j] = 1), Array.from({ length: rows - 2 }).forEach((_, i) => (highest => [Array.from({ length: cols }).forEach((_, j) => (h => highest = (h > highest ? ((fov[i + 1][j] = 1) && h) : highest))(input[i + 1][j])), highest = 0, Array.from({ length: cols }).forEach((_, j) => (h => highest = (h > highest ? ((fov[i + 1][cols - 1 - j] = 1) && h) : highest))(input[i + 1][cols - 1 - j]))])(0)), Array.from({ length: cols - 2 }).forEach((_, j) => (highest => [Array.from({ length: rows }).forEach((_, i) => (h => highest = (h > highest ? ((fov[i][j + 1] = 1) && h) : highest))(input[i][j + 1])), highest = 0, Array.from({ length: rows }).forEach((_, i) => (h => highest = (h > highest ? ((fov[rows - 1 - i][j + 1] = 1) && h) : highest))(input[rows - 1 - i][j + 1]))])(0))], fov][1])(input.map(r => r.map(_ => 0)), input.length, input[0].length).reduce((acc, row) => acc + row.filter(c => c).length, 0);
+	const ans2 = ((rows, cols) => (getScore => Math.max(...Array.from({ length: rows }).map((_, i) => Array.from({ length: cols }).map((_, j) => getScore(i, j))).flat()))((x, y) => ((score, H) => [1, -1].forEach(X => ((Y, i) => [Array.from({ length: rows }).find(() => ((I, J) => (I < 0 || I >= rows || J < 0 || J >= cols) ? (i-- || true) : ((input[I][J] >= H) ? true : (i++ && false)))(x + X * i, y + Y * i)), score *= i])(0, 1)) || [1, -1].forEach(Y => ((X, i) => [Array.from({ length: cols }).find(() => ((I, J) => (I < 0 || I >= rows || J < 0 || J >= cols) ? (i-- || true) : ((input[I][J] >= H) ? true : (i++ && false)))(x + X * i, y + Y * i)), score *= i])(0, 1)) || score)(1, input[x][y])))(input.length, input[0].length);
 	return [ans1, ans2];
 };

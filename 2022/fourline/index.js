@@ -1,6 +1,7 @@
 const options = {
 	'once-each': false,
-	'test': 8,
+	'test': 10,
+	'test-speed': false,
 	'git-table': false
 };
 
@@ -12,32 +13,34 @@ let i, tableStr = '| Day | Part 1 | Part 2 | Avg Runtime | Runs | Total Runtime 
 
 for (i = 1; files.includes(`day${i.toString().padStart(2, '0')}.js`); i++) {
 	days[i] = require(`./data/day${i.toString().padStart(2, '0')}.js`);
+	runs[i] = days[i].runs;
 	data[i] = fs.readFileSync(`./data/data${i.toString().padStart(2, '0')}.txt`, 'utf8');
 }
 
 if (options.test) {
 	if (Array.isArray(options.test)) options.test.forEach(n => {
-		let startTime = process.uptime();
+		const startTime = process.uptime();
 		console.log(days[n].solve(data[n]));
-		console.log(`Puzzle #${n} completed in ${(process.uptime() - startTime) * 1000}ms.`);
+		if (options['test-speed']) for (let z = 1; z < runs[n]; z++) days[n].solve(data[n]);
+		console.log(`Puzzle #${n} completed in ${(process.uptime() - startTime) * 1000 / (options['test-speed'] ? runs[n] : 1)}ms.`);
 	});
 	else {
-		let n = options.test;
-		let startTime = process.uptime();
+		const n = options.test;
+		const startTime = process.uptime();
 		console.log(days[n].solve(data[n]));
-		console.log(`Puzzle #${n} completed in ${(process.uptime() - startTime) * 1000}ms.`);
+		if (options['test-speed']) for (let z = 1; z < runs[n]; z++) days[n].solve(data[n]);
+		console.log(`Puzzle #${n} completed in ${(process.uptime() - startTime) * 1000 / (options['test-speed'] ? runs[n] : 1)}ms.`);
 	}
 	return;
 }
 else for (let j = 1; j < i; j++) {
-	runs[j] = options['once-each'] ? 1 : days[j].runs;
-	let runAmt = runs[j];
-	let solve = days[j].solve;
+	const runAmt = options['once-each'] ? 1 : runs[j];
+	const solve = days[j].solve;
 	if (!solve) continue;
-	let startTime = process.uptime();
+	const startTime = process.uptime();
 	solutions[j] = solve(data[j]);
 	for (let z = 1; z < runAmt; z++) solve(data[j]);
-	let endTime = process.uptime();
+	const endTime = process.uptime();
 	times[j] = (endTime - startTime) * 1000;
 	if (options['git-table']) tableStr += `\n| ${j} | ${solutions[j][0]} | ${solutions[j][1]} | ${Math.round(times[j] * 1000) / (1000 * runs[j])}ms | ${runs[j]} | ${Math.round(times[j] * 1000) / 1000}ms |`;
 }

@@ -1,0 +1,8 @@
+exports.runs = 1000;
+
+exports.solve = function (fileString) {
+	const input = ((data, start, end) => data.forEach((line, i) => line.forEach((char, j) => char > 0 || (char === -13 ? [start, line[j]] = [[i, j], 1] : [end, line[j]] = [[i, j], 26]))) || { data, start, end, solve: start => ((weights, toVisit, _ = weights[start[0]][start[1]] = 0) => (addToVisit => (findMap => findMap(Array.from({ length: data.length * data[0].length }), () => (toVisit.length === 0) ? Infinity : (({ x, y, weight }) => (H => findMap([[x, y + 1], [x, y - 1], [x + 1, y], [x - 1, y]].filter(([i, j]) => !(i < 0 || i >= data.length) && !(j < 0 || j >= data[0].length)).filter(([i, j]) => data[i][j] <= H + 1), ([i, j]) => (newWeight => (newWeight < weights[i][j]) ? (weights[i][j] = (newWeight && (cellIndex => [(cellIndex > -1) && toVisit.splice(cellIndex, 1), addToVisit(i, j, newWeight)])(toVisit.findIndex(cell => cell.x === i && cell.y === j))) ? ((i === end[0] && j === end[1]) ? newWeight : null) : null) : null)(weight + 1)))(data[x][y]))(toVisit.shift())))((arr, func) => arr.reduce((acc, cur) => acc ?? func(cur), null)))((x, y, weight) => (index => [toVisit.find(() => !(toVisit[index]?.weight <= weight && ++index)), toVisit.splice(index, 0, { x, y, weight })])(0)))(data.map(row => row.map(() => Infinity)), [{ x: start[0], y: start[1], weight: 0 }])})(fileString.trim().split('\n').map(line => line.split('').map(c => c.charCodeAt(0) - 'a'.charCodeAt(0) + 1)));
+	const ans1 = input.solve(input.start);
+	const ans2 = Math.min(...((As => input.data.forEach((line, i) => line.forEach((char, j) => char === 1 && As.push([i, j]))) || As)([])).map(input.solve));
+	return [ans1, ans2];
+};
