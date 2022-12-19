@@ -1,6 +1,6 @@
 const options = {
 	'once-each': false,
-	'test': 10,
+	'test': 16,
 	'test-speed': false,
 	'git-table': false
 };
