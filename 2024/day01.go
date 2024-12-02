@@ -40,6 +40,5 @@ func main() {
 		similarity += val1 * map2[val1]
 	}
 
-	fmt.Println(sum)
-	fmt.Println(similarity)
+	fmt.Println(sum, similarity)
 }
