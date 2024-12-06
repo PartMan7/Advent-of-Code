@@ -13,8 +13,8 @@ type Dir struct {
 	turn string
 }
 
-// Returns (count, loop?, visited (if not loop))
-func walkOnGrid(grid *[][]bool, dirs *map[string]Dir, initX, initY, extraX, extraY int) (int, bool, [][2]int) {
+// Returns (loop?, visited (if not loop))
+func walkOnGrid(grid *[][]bool, dirs *map[string]Dir, initX, initY, extraX, extraY int) (bool, [][2]int) {
 	lenX := len(*grid)
 	lenY := len((*grid)[0])
 
@@ -50,7 +50,7 @@ func walkOnGrid(grid *[][]bool, dirs *map[string]Dir, initX, initY, extraX, extr
 		key := fmt.Sprintf("%d|%d|%s", posX, posY, dir.name)
 		_, inCache := steps[key]
 		if inCache {
-			return 0, true, nil
+			return true, nil
 		}
 
 		visited[posX][posY] = true
@@ -58,7 +58,7 @@ func walkOnGrid(grid *[][]bool, dirs *map[string]Dir, initX, initY, extraX, extr
 	}
 
 	if extraX != -1 || extraY != -1 {
-		return 0, false, nil
+		return false, nil
 	}
 
 	var visitedCells [][2]int
@@ -70,10 +70,7 @@ func walkOnGrid(grid *[][]bool, dirs *map[string]Dir, initX, initY, extraX, extr
 		}
 	}
 
-	// 	fmt.Println(visitedCells)
-	// 	printGrid(visited)
-
-	return len(visitedCells), false, visitedCells
+	return false, visitedCells
 
 }
 
@@ -102,11 +99,12 @@ func main() {
 	dirs["down"] = Dir{name: "down", X: 1, Y: 0, turn: "left"}
 	dirs["left"] = Dir{name: "left", X: 0, Y: -1, turn: "up"}
 
-	count1, _, visited := walkOnGrid(&grid, &dirs, posX, posY, -1, -1)
+	_, visited := walkOnGrid(&grid, &dirs, posX, posY, -1, -1)
 	count2 := 0
+	count1 := len(visited)
 
 	for _, obstruction := range visited {
-		_, loop, _ := walkOnGrid(&grid, &dirs, posX, posY, obstruction[0], obstruction[1])
+		loop, _ := walkOnGrid(&grid, &dirs, posX, posY, obstruction[0], obstruction[1])
 		if loop {
 			count2++
 		}
