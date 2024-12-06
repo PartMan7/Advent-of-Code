@@ -43,7 +43,7 @@ func main() {
 	for _, list := range lists {
 		length := len(list)
 		if check(list, &rules) {
-			num, _ := strconv.Atoi(list[(length + 1) / 2 - 1])
+			num, _ := strconv.Atoi(list[(length+1)/2-1])
 			count1 += num
 		} else {
 			slices.SortFunc(list, func(a, b string) int {
@@ -52,7 +52,7 @@ func main() {
 				}
 				return -1
 			})
-			num, _ := strconv.Atoi(list[(length + 1) / 2 - 1])
+			num, _ := strconv.Atoi(list[(length+1)/2-1])
 			count2 += num
 		}
 	}

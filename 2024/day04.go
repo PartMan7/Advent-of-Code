@@ -30,9 +30,7 @@ func checkXmas(x, y, dirX, dirY int, grid *[]string) bool {
 }
 
 func gotSM(c1 byte, c2 byte) bool {
-	M := "M"[0]
-	S := "S"[0]
-	return (c1 == M && c2 == S) || (c1 == S && c2 == M)
+	return (c1 == 'M' && c2 == 'S') || (c1 == 'S' && c2 == 'M')
 }
 
 func checkCrossMas(x, y int, grid *[]string) bool {
@@ -43,9 +41,7 @@ func checkCrossMas(x, y int, grid *[]string) bool {
 		return false
 	}
 
-	A := "A"[0]
-
-	if (*grid)[x][y] != A {
+	if (*grid)[x][y] != 'A' {
 		return false
 	}
 
