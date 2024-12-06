@@ -26,7 +26,9 @@ func main() {
 	_rawData := strings.Split(strings.Trim(string(file), "\n"), "\n\n")
 	_rules := strings.Split(_rawData[0], "\n")
 	rules := make([][2]string, len(_rules))
+	rulesCache := make(map[string]bool, len(_rules))
 	for i, rule := range _rules {
+		rulesCache[rule] = true
 		sides := strings.Split(rule, "|")
 		rules[i] = [2]string{sides[0], sides[1]}
 	}
@@ -45,7 +47,7 @@ func main() {
 			count1 += num
 		} else {
 			slices.SortFunc(list, func(a, b string) int {
-				if slices.Contains(_rules, fmt.Sprintf("%s|%s", a, b)) {
+				if rulesCache[fmt.Sprintf("%s|%s", a, b)] {
 					return 1
 				}
 				return -1
