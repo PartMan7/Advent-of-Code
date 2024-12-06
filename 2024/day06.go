@@ -42,19 +42,19 @@ func walkOnGrid(grid *[][]bool, dirs *map[string]Dir, initX, initY, extraX, extr
 		if (*grid)[nextX][nextY] || (nextX == extraX && nextY == extraY) {
 			// Hit obstruction; turn
 			dir = (*dirs)[dir.turn]
+
+			key := fmt.Sprintf("%d|%d|%s", posX, posY, dir.name)
+			_, inCache := steps[key]
+			if inCache {
+				return true, nil
+			}
+			steps[key] = true
 			continue
 		}
 		posX = nextX
 		posY = nextY
 
-		key := fmt.Sprintf("%d|%d|%s", posX, posY, dir.name)
-		_, inCache := steps[key]
-		if inCache {
-			return true, nil
-		}
-
 		visited[posX][posY] = true
-		steps[key] = true
 	}
 
 	if extraX != -1 || extraY != -1 {
