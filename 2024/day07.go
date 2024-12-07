@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -11,6 +10,16 @@ import (
 type Eq struct {
 	target int
 	feed   []int
+}
+
+func concat(num1, num2 int) int {
+	res := num1 * 10
+	temp := num2
+	for temp >= 10 {
+		temp /= 10
+		res *= 10
+	}
+	return res + num2
 }
 
 func reducer(acc int, index int, line *Eq, useConcat bool) bool {
@@ -22,12 +31,10 @@ func reducer(acc int, index int, line *Eq, useConcat bool) bool {
 		return acc == target
 	}
 	next := line.feed[index]
-	inter := reducer(acc+next, index+1, line, useConcat) || reducer(acc*next, index+1, line, useConcat)
-	if !inter && useConcat {
-		nextAcc := acc*int(math.Pow(10, 1+math.Floor(math.Log10(float64(next))))) + next
-		inter = reducer(nextAcc, index+1, line, useConcat)
+	if reducer(acc+next, index+1, line, useConcat) || reducer(acc*next, index+1, line, useConcat) {
+		return true
 	}
-	return inter
+	return useConcat && reducer(concat(acc, next), index+1, line, useConcat)
 }
 
 func main() {
