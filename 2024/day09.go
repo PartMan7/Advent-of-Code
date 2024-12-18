@@ -150,8 +150,7 @@ func main() {
 		blanks = !blanks
 	}
 	compact(&expanded)
-	fmt.Println(checksum(&expanded))
-
 	packetCompact(&compacted)
-	fmt.Println(compactChecksum(&compacted))
+
+	fmt.Println(checksum(&expanded), compactChecksum(&compacted))
 }
