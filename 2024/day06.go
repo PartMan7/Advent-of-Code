@@ -8,8 +8,7 @@ import (
 
 type Dir struct {
 	name string
-	X    int
-	Y    int
+	X, Y int
 	turn string
 }
 
