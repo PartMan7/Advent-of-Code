@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+go fmt "day$1.go"
+time go run "day$1.go"
