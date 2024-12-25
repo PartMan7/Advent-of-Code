@@ -10,16 +10,14 @@ import (
 )
 
 type Dir struct {
-	name string
-	key  byte
 	X, Y int
 }
 
 var dirs = map[byte]Dir{
-	'^': Dir{"up", '^', -1, 0},
-	'>': Dir{"right", '^', 0, 1},
-	'v': Dir{"down", '^', 1, 0},
-	'<': Dir{"left", '^', 0, -1},
+	'^': Dir{-1, 0},
+	'>': Dir{0, 1},
+	'v': Dir{1, 0},
+	'<': Dir{0, -1},
 }
 
 func tryMove(move byte, posX, posY *int, grid *[][]byte) {
