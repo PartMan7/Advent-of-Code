@@ -111,21 +111,22 @@ loop:
 	return output
 }
 
-func check(nextA, A int) int {
-	// Hardcoded from input
-	b := nextA ^ 5
+func check(nextA, A, B1, B2 int) int {
+	// This only works assuming the program to be 2,4,1,B1,7,5,1,B2,0,3,4,6,5,5,3,0
+	b := nextA ^ B1
 	c := (A + nextA) / intPow(2, b, A+nextA)
-	b = (b ^ 6) ^ c
+	b = (b ^ B2) ^ c
 	return b % 8
 }
 func backsolve(cursor, A int, program *[]int) (output int, ok bool) {
+	B1, B2 := (*program)[3], (*program)[7]
 	if cursor < 0 {
 		return A, true
 	}
 	target := (*program)[cursor]
 	A *= 8
 	for a := range 8 {
-		if check(a, A) == target {
+		if check(a, A, B1, B2) == target {
 			res, ok := backsolve(cursor-1, A+a, program)
 			if ok {
 				return res, true
