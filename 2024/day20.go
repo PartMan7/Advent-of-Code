@@ -72,14 +72,11 @@ func getCheats(radius int) int {
 		}
 	}
 	count := 0
-	cache := make(map[int]int)
 	for _, cheatSave := range cheats {
-		cache[cheatSave]++
 		if cheatSave >= 100 {
 			count++
 		}
 	}
-	fmt.Println(cache)
 	return count
 }
 
